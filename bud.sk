@@ -1,0 +1,68 @@
+on join:
+    send "&3 곧 수행이 시작된다. 빠르게 자리에 앉자."
+    wait 10 seconds
+    play sound "bgm.buddhism" with volume 0.7 to player
+
+on rightclick on carpet:
+    set {carpet::%player%} to true
+    set {immideate::%player%} to false
+
+on sneak toggle:
+    if {carpet::%player%} is true:
+        set {spawn::%player%} to player's location
+        set {carpet::%player%} to false
+        send "&c 수행 중간에 일어나서는 안된다."
+        wait 1 second
+        kill player
+
+command /취소:
+    permission: op
+    trigger:
+        delete {carpet::*}
+        delete {immideate::*}
+
+on respawn:
+    if {spawn::%player%} is set:
+        set respawn location to {spawn::%player%}
+
+    if {immideate::%player%} is not true:
+        send "&3 빠르게 자리에 앉자."
+
+    wait 5 seconds
+
+    if {carpet::%player%} is false:
+        set {immideate::%player%} to true
+        kill player
+        send "&c 수행에 방해되지 않도록 빨리 자리에 앉자."
+
+every 1 second:
+    send action bar "&l遂行" to all players
+
+on chat:
+    if player is op:
+        stop
+
+    if {queit} is true:
+        cancel event
+        broadcast "<%player's name%> ..."
+
+on rightclick on bell:
+    if player is op:
+        execute console command "쉿"
+
+command /쉿:
+    permission: op
+    trigger:
+        if {queit} is true:
+            set {queit} to false
+            send title "&l덕담" to all players
+        else:
+            set {queit} to true
+            send title "&l침묵" to all players
+
+command /천주교:
+    permission: op
+    trigger:
+        send title "&l수행종료" to all players for 100 seconds
+        while true:
+            add 1 to {_n}
