@@ -1,0 +1,4 @@
+command /knife <test>:
+    trigger:
+        give player a iron sword 
+        add "&7%arg-1%" to lore of player's tool
