@@ -1,12 +1,18 @@
-on join:
+on first join:
+    wait 5 seconds
     send "&3 곧 수행이 시작된다. 빠르게 자리에 앉자."
-    wait 10 seconds
+    teleport player to location(-96.5, -46, 266.5, world "world", 0, 0)
+    wait 2 seconds
     play sound "bgm.buddhism" with volume 0.7 to player
+    wait 10 seconds
 
+    if {carpet::%player%} is false:
+        send "&c 수행에 방해되지 않도록 빨리 자리에 앉자."
+        kill player
 on rightclick on carpet:
     set {carpet::%player%} to true
     set {immideate::%player%} to false
-
+        
 on sneak toggle:
     if {carpet::%player%} is true:
         set {spawn::%player%} to player's location
@@ -66,3 +72,7 @@ command /천주교:
         send title "&l수행종료" to all players for 100 seconds
         while true:
             add 1 to {_n}
+
+command /sit:
+    trigger:
+        send "no!"
