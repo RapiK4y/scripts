@@ -1,12 +1,15 @@
 on join:
     wait 1 second
 
-    send "&3 곧 예배가 시작된다. 빠르게 자리에 앉자."
+    send "&3 곧 예배가 시작된다. 빠르게 자리에 앉자." to player
 
     connecting(player)
 
-on rightclick at stair:
+on rightclick on stair:
     set {chair::%player%} to true
+    if {sounds.%player%} is not true:
+        play sound "bgm.christ" with volume 0.7 to player
+        set {sounds.%player%} to true
 
 on sneak toggle:
     if {chair::%player%} is true:
@@ -20,16 +23,18 @@ function connecting(p: player):
     while {chair::%{_p}%} is not true:
         wait 1 second
         add 1 to {counting::%{_p}%}
-
+        
         if {counting::%{_p}%} >= 5:
-            send "&c 예배에 방해되지 않도록 빨리 자리에 앉자."
+            send "&c 예배에 방해되지 않도록 빨리 자리에 앉자." to {_p}
             kill {_p}
-            set counting::{_p} to 0
+            set {counting::%{_p}%} to 0
+            stop loop
 
-    set counting::{_p} to 0
+    set {counting::%{_p}%} to 0
 
 on death:
     cancel event
+    wait 1 tick
     teleport victim to {spawn::%victim%}
 
     connecting(victim)
@@ -104,3 +109,25 @@ function bible(p: player):
         broadcast "&c&l 마녀다!!! %{_p}%는 마녀다!!!!!"
         wait 2 seconds
         kill {_p}
+
+command /알라:
+    permission: op
+    trigger:
+        send title "&lAllahu Akbar" to all players for 100 seconds
+
+        while true:
+            add 1 to {_n}
+
+on rightclick on bell:
+    if player is not op:
+        cancel event
+    else:
+        execute console command "쉿"
+
+command /me:
+    trigger:
+        send "no!"
+
+command /sit:
+    trigger:
+        send "no!"
