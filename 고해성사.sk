@@ -1,0 +1,328 @@
+on join:
+
+    wait 15 ticks
+
+    set {c.%uuid of player%} to true
+
+    clear player's inventory
+
+    teleport player to location(498, 51, 290, world "slime", -90, 0)
+
+    set gamemode of player to adventure
+
+    apply potion of saturation of tier 5 without particles to player for 65 minutes
+
+    apply potion of resistance of tier 10 without particles to player for 65 minutes
+
+    apply potion of invisibility of tier 1 without particles to player for 65 minutes
+
+
+
+command /메타몽:
+
+  permission: op
+
+  trigger:
+
+    if {ditto} = 1:
+
+      play sound "ui.toast.challenge_complete" with pitch 1.4 to all players
+
+      broadcast " "
+
+      broadcast " "
+
+      broadcast "&e&l고해성사 해제"
+
+      broadcast " "
+
+      broadcast " "
+
+      set {ditto} to 0
+
+    else:
+
+      play sound "ui.toast.challenge_complete" with pitch 1.4 to all players
+
+      broadcast " "
+
+      broadcast " "
+
+      broadcast "&e&l고해성사 시작 (소신발언은 /me 사용)"
+
+      broadcast " "
+
+      broadcast " "
+
+      set {ditto} to 1
+
+
+
+command /소신발언 [<player>]:
+
+  permission: op
+
+  trigger:
+
+    if {ditto.%arg 1%} = 1:
+
+      play sound "ui.toast.challenge_complete" with pitch 1.4 to all players
+
+      broadcast " "
+
+      broadcast " "
+
+      broadcast "&c[✞] &6누군가의 소신발언 끝났습니다."
+
+      broadcast " "
+
+      broadcast " "
+
+      set {ditto.%arg 1%} to 0
+
+      set {game} to 0
+
+    else:
+
+      play sound "ui.toast.challenge_complete" with pitch 1.4 to all players
+
+      broadcast " "
+
+      broadcast " "
+
+      broadcast "&c[✞] &6누군가가 소신발언을 시작합니다."
+
+      broadcast " "
+
+      broadcast " "
+
+      set {ditto.%arg 1%} to 1
+
+      set {game} to 1
+
+      wait 1 tick
+
+      loop all players:
+
+        if {ditto.%loop-player%} = 1:
+
+          message "&c[✞] &b당신 차례입니다." to loop-player
+
+
+
+command /고해성사 [<player>]:
+
+  permission: op
+
+  trigger:
+
+    if {game} = 1:
+
+      execute console command "/clear @a"
+
+      play sound "block.bell.use" with pitch 0.7 to all players
+
+      play sound "block.bell.use" with pitch 0.7 to all players
+
+      play sound "block.bell.use" with pitch 0.7 to all players
+
+      broadcast " "
+
+      broadcast " "
+
+      broadcast "&c[✞] &6누군가의 고해성사가 끝났습니다."
+
+      broadcast " "
+
+      broadcast " "
+
+      set {ditto.%arg 1%} to 0
+
+      set {game} to 0
+
+    else:
+
+      set {gohae_host} to random player out of all players
+
+      play sound "block.bell.use" with pitch 0.7 to all players
+
+      play sound "block.bell.use" with pitch 0.7 to all players
+
+      play sound "block.bell.use" with pitch 0.7 to all players
+
+      broadcast " "
+
+      broadcast " "
+
+      broadcast "&c[✞] &6누군가가 고해성사를 시작합니다."
+
+      broadcast " "
+
+      broadcast " "
+
+      set {ditto.%arg 1%} to 1
+
+      set {game} to 1
+
+      give 1 red concrete named "&b☹" to all players
+
+      give 1 blue concrete named "&b☺" to all players
+
+      give 1 black concrete named "&b" to all players
+
+      give 1 yellow concrete named "&b☆" to all players
+
+      give 1 brown concrete named "&b✖" to all players
+
+      give 1 lime concrete named "&b♪" to all players
+
+      give 1 light blue concrete named "&b-‿-" to all players
+
+      give 1 green concrete named "&b^+^" to all players
+
+      give 1 white concrete named "&b^*^" to all players
+
+      wait 1 tick
+
+      loop all players:
+
+        if {ditto.%loop-player%} = 1:
+
+          message "&c[✞] &b당신 차례입니다." to loop-player
+
+          send title "너 차례" to loop-player
+
+
+
+on chat:
+
+  if {game} = 1:
+
+    if {ditto.%player%} = 1:
+
+      set the chat format to "<목소리> &f%message%"
+
+    else:
+
+      cancel event
+
+      message "쉿! 누군가가 고해성사 중입니다!"
+
+
+
+on join:
+
+   set join message to "누군가가 들어왔다."
+
+ 
+
+on quit:
+
+   set quit message to "누군가가 나갔다."
+
+
+
+command /me:
+
+  permission: op
+
+  trigger:
+    send "no!"
+
+command /minecraft:me:
+
+  permission: op
+
+  trigger:
+    send "no!"
+
+
+
+command /고해선택:
+
+  permission: op
+
+  trigger:
+
+    broadcast "&b&l누군가의 확률을 &a&lUP&b&l시켯따!"
+
+
+
+on drop:
+
+  cancel event
+
+
+
+on right click with red concrete:
+
+  broadcast "☹"
+
+  play sound "entity.villager.no" at player for all players
+
+  clear player's inventory
+
+on right click with blue concrete:
+
+  broadcast "☺"
+
+  play sound "entity.villager.yes" at player for all players
+
+  clear player's inventory
+
+on right click with black concrete:
+
+  broadcast ""
+
+  play sound "entity.ghast.warn" at player for all players
+
+  clear player's inventory
+
+on right click with yellow concrete:
+
+  broadcast "☆"
+
+  play sound "block.note_block.chime" at player for all players
+
+  clear player's inventory
+
+on right click with brown concrete:
+
+  broadcast "✖"
+
+  play sound "entity.ender_dragon.ambient" at player for all players
+
+  clear player's inventory
+
+on right click with lime concrete:
+
+  broadcast "♪"
+
+  play sound "block.note_block.pling" with pitch 2 at player for all players
+
+  clear player's inventory
+
+on right click with light blue concrete:
+
+  broadcast "-‿-"
+
+  play sound "entity.witch.celebrate" at player for all players
+
+  clear player's inventory
+
+on right click with green concrete:
+
+  broadcast "^+^"
+
+  play sound "block.note_block.pling" with pitch 0.5 at player for all players
+
+  clear player's inventory
+
+on right click with white concrete:
+
+  broadcast "^*^"
+
+  play sound "entity.wither.hurt" with pitch 0.5 at player for all players
+
+  clear player's inventory
+

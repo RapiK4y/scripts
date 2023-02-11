@@ -3,6 +3,8 @@ on join:
 
     send "&3 곧 예배가 시작된다. 빠르게 자리에 앉자." to player
 
+    wait 30 seconds
+
     connecting(player)
 
 on rightclick on stair:
@@ -24,7 +26,7 @@ function connecting(p: player):
         wait 1 second
         add 1 to {counting::%{_p}%}
         
-        if {counting::%{_p}%} >= 5:
+        if {counting::%{_p}%} >= 10:
             send "&c 예배에 방해되지 않도록 빨리 자리에 앉자." to {_p}
             kill {_p}
             set {counting::%{_p}%} to 0
@@ -35,8 +37,10 @@ function connecting(p: player):
 on death:
     cancel event
     wait 1 tick
-    teleport victim to {spawn::%victim%}
-
+    if {spawn::%victim%} is set:
+        teleport victim to {spawn::%victim%}
+    else:
+        teleport victim to spawn
     connecting(victim)
 
 command /성경:
@@ -122,7 +126,7 @@ on rightclick on bell:
     if player is not op:
         cancel event
     else:
-        execute console command "쉿"
+        execute console command "성경"
 
 command /me:
     trigger:
