@@ -1,0 +1,6 @@
+on join:
+    wait 1 second
+    send title "라디오 도메인 변경" to player
+
+    send "&l 라디오 도메인 변경 dantadc.kro.kr" to player
+    send "&l 현재 서버는 개발서버입니다" to player

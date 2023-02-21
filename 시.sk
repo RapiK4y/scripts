@@ -19,7 +19,6 @@ command /시 [<player>]:
 
         clearfunction()
         broadcast "{@t} 게임이 시작됩니다."
-        teleport all players to location(-63.5, -60, 59.5, world "world", 0, 0)
 
         broadcast "{@t} 잠시 후 시인이 선정됩니다."
         wait 2 seconds
@@ -28,11 +27,9 @@ command /시 [<player>]:
         else:
             set {twosixfour} to arg-1
         broadcast "{@t} %{twosixfour}%이(가) 이번 시인입니다."
-        teleport {twosixfour} to location(-64.5, -59, 69.5, world "world", 180, 0)
         wait 2 second
         set {fundmanager} to random player out of all players   
         broadcast "{@t} %{fundmanager}%이(가) 이번 주제를 선정합니다."
-        teleport {fundmanager} to location(-69.5, -59, 64.5, world "world", -90, 0) if {twosixfour} is not {fundmanager}
 
         set {choosing} to true        
 
@@ -74,7 +71,6 @@ command /강제중단:
 
         broadcast "{@t} 게임이 강제중단 됐습니다."
         
-        teleport all players to location(-54.5, -59, 67.5, world "world", 180, 0)
         wait 3 seconds
         broadcast "{@t} 이제 다시 게임이 가능합니다."
         set {forcestop} to false
@@ -120,7 +116,6 @@ function ending():
     set {maingame} to false
     send title " " to {twosixfour}
     clearfunction()
-    teleport all players to location(-54.5, -59, 67.5, world "world", 180, 0)
 
 function poemtitle(p: player):
     broadcast "&f&l==============================================="
